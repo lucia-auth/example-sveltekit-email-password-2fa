@@ -100,10 +100,17 @@ async function totpAction(event: RequestEvent) {
 
 async function recoveryCodeAction(event: RequestEvent) {
 	const { session } = validatePasswordResetSessionRequest(event);
-	if (session === null || !session.emailVerified) {
+	if (session === null) {
 		return fail(401, {
 			recoveryCode: {
 				message: "Not authenticated"
+			}
+		});
+	}
+	if (!session.emailVerified) {
+		return fail(403, {
+			recoveryCode: {
+				message: "Forbidden"
 			}
 		});
 	}

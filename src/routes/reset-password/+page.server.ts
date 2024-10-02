@@ -36,9 +36,14 @@ export const actions: Actions = {
 
 async function action(event: RequestEvent) {
 	const { session: passwordResetSession, user } = validatePasswordResetSessionRequest(event);
-	if (passwordResetSession === null || !passwordResetSession.emailVerified) {
+	if (passwordResetSession === null) {
 		return fail(401, {
 			message: "Not authenticated"
+		});
+	}
+	if (!passwordResetSession.emailVerified) {
+		return fail(403, {
+			message: "Forbidden"
 		});
 	}
 	if (user.registered2FA && !passwordResetSession.twoFactorVerified) {
