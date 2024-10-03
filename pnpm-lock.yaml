@@ -26,9 +26,6 @@ importers:
       '@pilcrowjs/db-query':
         specifier: ^0.0.2
         version: 0.0.2
-      '@pilcrowjs/object-parser':
-        specifier: ^0.0.4
-        version: 0.0.4
       better-sqlite3:
         specifier: ^11.3.0
         version: 11.3.0
@@ -351,9 +348,6 @@ packages:
 
   '@pilcrowjs/db-query@0.0.2':
     resolution: {integrity: sha512-d1iARoIxeUL2cTGhJe4JPhp/n1sXtgnM1mL7elrfsKjdwwjWTDyPDtVcGQy6W7RvrtZ40Wh0pdeYdBnboQjewg==}
-
-  '@pilcrowjs/object-parser@0.0.4':
-    resolution: {integrity: sha512-mBy3FMv2lvl/sZX/q03wvl3Km8FWg7kbrqQ/qMxK49uZcBssD76Js5k+o7VuCDJI8SNvsrbIX8y6vclx7bWeSg==}
 
   '@polka/url@1.0.0-next.28':
     resolution: {integrity: sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==}
@@ -1097,8 +1091,6 @@ snapshots:
       '@oslojs/encoding': 1.0.0
 
   '@pilcrowjs/db-query@0.0.2': {}
-
-  '@pilcrowjs/object-parser@0.0.4': {}
 
   '@polka/url@1.0.0-next.28': {}
 
