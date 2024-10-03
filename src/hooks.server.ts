@@ -1,8 +1,8 @@
 import { RefillingTokenBucket } from "$lib/server/rate-limit";
 import { validateSessionToken, setSessionTokenCookie, deleteSessionTokenCookie } from "$lib/server/session";
+import { sequence } from "@sveltejs/kit/hooks";
 
 import type { Handle } from "@sveltejs/kit";
-import { sequence } from "@sveltejs/kit/hooks";
 
 const bucket = new RefillingTokenBucket<string>(100, 1);
 
