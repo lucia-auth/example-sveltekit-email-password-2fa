@@ -30,9 +30,8 @@ export async function load(event: RequestEvent) {
 		recoveryCode = getUserRecoverCode(event.locals.user.id);
 	}
 	return {
-		email: event.locals.user.email,
 		recoveryCode,
-		registered2FA: event.locals.user.registered2FA
+		user: event.locals.user
 	};
 }
 

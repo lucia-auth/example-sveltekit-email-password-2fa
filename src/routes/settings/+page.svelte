@@ -10,7 +10,7 @@
 <h1>Settings</h1>
 <section>
 	<h2>Update email</h2>
-	<p>Your email: {data.email}</p>
+	<p>Your email: {data.user.email}</p>
 	<form method="post" use:enhance action="?/email">
 		<label for="form-email.email">New email</label>
 		<input type="email" id="form-email.email" name="email" required /><br />
@@ -35,7 +35,7 @@
 		<p>{form?.password?.message ?? ""}</p>
 	</form>
 </section>
-{#if data.registered2FA}
+{#if data.user.registered2FA}
 	<section>
 		<h2>Update two-factor authentication</h2>
 		<a href="/2fa/setup">Update</a>
