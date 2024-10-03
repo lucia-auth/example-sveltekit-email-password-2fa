@@ -6,7 +6,13 @@
 	export let data: PageData;
 </script>
 
-<h1>Hi {data.user.username}!</h1>
-<form method="post" use:enhance>
-	<button>Sign out</button>
-</form>
+<header>
+	<a href="/">Home</a>
+	<a href="/settings">Settings</a>
+</header>
+<main>
+	<h1>Hi {data.user.username}!</h1>
+	<form method="post" use:enhance>
+		<button>Sign out</button>
+	</form>
+</main>
