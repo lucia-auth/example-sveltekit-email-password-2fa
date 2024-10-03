@@ -19,5 +19,4 @@
 	<button>Resend code</button>
 	<p>{form?.resend?.message ?? ""}</p>
 </form>
-<p id="resend-message"></p>
 <a href="/settings">Change your email</a>

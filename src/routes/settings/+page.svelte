@@ -44,7 +44,7 @@
 {#if data.recoveryCode !== null}
 	<section>
 		<h1>Recovery code</h1>
-		<p id="recovery-code">Your recovery code is: {data.recoveryCode}</p>
-		<button id="button-generate-recovery-code">Generate new code</button>
+		<p>Your recovery code is: {data.recoveryCode}</p>
+		<button>Generate new code</button>
 	</section>
 {/if}
