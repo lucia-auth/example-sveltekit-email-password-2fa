@@ -8,6 +8,8 @@ CREATE TABLE user (
     recovery_code BLOB NOT NULL
 );
 
+CREATE INDEX email_index ON user(email);
+
 CREATE TABLE session (
     id TEXT NOT NULL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES user(id),
@@ -20,8 +22,7 @@ CREATE TABLE email_verification_request (
     user_id INTEGER NOT NULL REFERENCES user(id),
     email TEXT NOT NULL,
     code TEXT NOT NULL,
-    expires_at INTEGER NOT NULL,
-    email_verified INTEGER NOT NULL NOT NULL DEFAULT 0
+    expires_at INTEGER NOT NULL
 );
 
 CREATE TABLE password_reset_session (
