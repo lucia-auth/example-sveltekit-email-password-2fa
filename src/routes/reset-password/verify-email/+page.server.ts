@@ -37,17 +37,17 @@ async function action(event: RequestEvent) {
 			message: "Not authenticated"
 		});
 	}
+	if (session.emailVerified) {
+		return fail(403, {
+			message: "Forbidden"
+		});
+	}
 	if (!bucket.check(session.userId, 1)) {
 		return fail(429, {
 			message: "Too many requests"
 		});
 	}
 
-	if (session.emailVerified) {
-		return fail(400, {
-			message: "Already verified"
-		});
-	}
 	const formData = await event.request.formData();
 	const code = formData.get("code");
 	if (typeof code !== "string") {

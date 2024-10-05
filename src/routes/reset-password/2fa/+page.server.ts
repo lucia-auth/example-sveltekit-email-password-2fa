@@ -114,17 +114,17 @@ async function recoveryCodeAction(event: RequestEvent) {
 			}
 		});
 	}
+	if (session.twoFactorVerified) {
+		return fail(403, {
+			recoveryCode: {
+				message: "Forbidden"
+			}
+		});
+	}
 	if (!recoveryCodeBucket.check(session.userId, 1)) {
 		return fail(429, {
 			recoveryCode: {
 				message: "Too many requests"
-			}
-		});
-	}
-	if (session.twoFactorVerified) {
-		return fail(400, {
-			recoveryCode: {
-				message: "Already verified"
 			}
 		});
 	}
