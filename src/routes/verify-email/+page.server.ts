@@ -42,10 +42,18 @@ export const actions: Actions = {
 
 async function verifyCode(event: RequestEvent) {
 	if (event.locals.session === null || event.locals.user === null) {
-		return fail(401);
+		return fail(401, {
+			verify: {
+				message: "Not authenticated"
+			}
+		});
 	}
 	if (event.locals.user.registered2FA && !event.locals.session.twoFactorVerified) {
-		return fail(401);
+		return fail(401, {
+			verify: {
+				message: "Not authenticated"
+			}
+		});
 	}
 	if (!bucket.check(event.locals.user.id, 1)) {
 		return fail(429, {
@@ -57,7 +65,11 @@ async function verifyCode(event: RequestEvent) {
 
 	let verificationRequest = getUserEmailVerificationRequestFromRequest(event);
 	if (verificationRequest === null) {
-		return fail(401);
+		return fail(401, {
+			verify: {
+				message: "Not authenticated"
+			}
+		});
 	}
 	const formData = await event.request.formData();
 	const code = formData.get("code");
@@ -133,7 +145,11 @@ async function resendEmail(event: RequestEvent) {
 
 	let verificationRequest = getUserEmailVerificationRequestFromRequest(event);
 	if (verificationRequest === null) {
-		return fail(401);
+		return fail(401, {
+			verify: {
+				message: "Not authenticated"
+			}
+		});
 	}
 	if (!sendVerificationEmailBucket.consume(event.locals.user.id, 1)) {
 		return fail(429, {
