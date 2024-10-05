@@ -49,9 +49,9 @@ async function verifyCode(event: RequestEvent) {
 		});
 	}
 	if (event.locals.user.registered2FA && !event.locals.session.twoFactorVerified) {
-		return fail(401, {
+		return fail(403, {
 			verify: {
-				message: "Not authenticated"
+				message: "Forbidden"
 			}
 		});
 	}
@@ -129,7 +129,7 @@ async function resendEmail(event: RequestEvent) {
 		});
 	}
 	if (event.locals.user.registered2FA && !event.locals.session.twoFactorVerified) {
-		return fail(401, {
+		return fail(403, {
 			resend: {
 				message: "Forbidden"
 			}
