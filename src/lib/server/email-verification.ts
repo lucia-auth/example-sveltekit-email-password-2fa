@@ -5,10 +5,11 @@ import { encodeBase32 } from "@oslojs/encoding";
 
 import type { RequestEvent } from "@sveltejs/kit";
 
-export function getEmailVerificationRequest(id: string): EmailVerificationRequest | null {
-	const row = db.queryOne("SELECT id, user_id, code, email, expires_at FROM email_verification_request WHERE id = ?", [
-		id
-	]);
+export function getUserEmailVerificationRequest(userId: number, id: string): EmailVerificationRequest | null {
+	const row = db.queryOne(
+		"SELECT id, user_id, code, email, expires_at FROM email_verification_request WHERE id = ? AND user_id = ?",
+		[id, userId]
+	);
 	if (row === null) {
 		return row;
 	}
@@ -81,8 +82,8 @@ export function getUserEmailVerificationRequestFromRequest(event: RequestEvent):
 	if (id === null) {
 		return null;
 	}
-	const request = getEmailVerificationRequest(id);
-	if (request !== null && request.userId !== event.locals.user.id) {
+	const request = getUserEmailVerificationRequest(event.locals.user.id, id);
+	if (request !== null) {
 		deleteEmailVerificationRequestCookie(event);
 		return null;
 	}
