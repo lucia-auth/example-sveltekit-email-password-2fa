@@ -17,7 +17,7 @@ WHERE session.id = ?
 	);
 
 	if (row === null) {
-		return { token: null, session: null, user: null };
+		return { session: null, user: null };
 	}
 	const session: Session = {
 		id: row.string(0),
@@ -34,7 +34,7 @@ WHERE session.id = ?
 	};
 	if (Date.now() >= session.expiresAt.getTime()) {
 		db.execute("DELETE FROM session WHERE id = ?", [session.id]);
-		return { token: null, session: null, user: null };
+		return { session: null, user: null };
 	}
 	if (Date.now() >= session.expiresAt.getTime() - 1000 * 60 * 60 * 24 * 15) {
 		session.expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30);
@@ -43,7 +43,7 @@ WHERE session.id = ?
 			session.id
 		]);
 	}
-	return { token, session, user };
+	return { session, user };
 }
 
 export function invalidateSession(sessionId: string): void {
@@ -112,6 +112,4 @@ export interface Session extends SessionFlags {
 	userId: number;
 }
 
-type SessionValidationResult =
-	| { token: string; session: Session; user: User }
-	| { token: null; session: null; user: null };
+type SessionValidationResult = { session: Session; user: User } | { session: null; user: null };
