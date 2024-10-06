@@ -31,7 +31,7 @@ ENCRYPTION_KEY="L9pmqRJnO1ZJSQ2svbHuBA=="
 > openssl rand --base64 16
 > ```
 
-Run the application:
+Install dependencies and run the application:
 
 ```
 pnpm i
