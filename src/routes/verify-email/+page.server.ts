@@ -154,7 +154,7 @@ async function resendEmail(event: RequestEvent) {
 	if (verificationRequest === null) {
 		if (event.locals.user.emailVerified) {
 			return fail(403, {
-				verify: {
+				resend: {
 					message: "Forbidden"
 				}
 			});
