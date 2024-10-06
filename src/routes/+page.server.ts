@@ -4,7 +4,7 @@ import { deleteSessionTokenCookie, invalidateSession } from "$lib/server/session
 import type { Actions, PageServerLoadEvent, RequestEvent } from "./$types";
 
 export function load(event: PageServerLoadEvent) {
-	if (event.locals.user === null || event.locals.session === null) {
+	if (event.locals.session === null || event.locals.user === null) {
 		return redirect(302, "/login");
 	}
 	if (!event.locals.user.emailVerified) {

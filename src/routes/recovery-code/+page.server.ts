@@ -4,7 +4,7 @@ import { redirect } from "@sveltejs/kit";
 import type { RequestEvent } from "./$types";
 
 export async function load(event: RequestEvent) {
-	if (event.locals.user === null || event.locals.session === null) {
+	if (event.locals.session === null || event.locals.user === null) {
 		return redirect(302, "/login");
 	}
 	if (!event.locals.user.emailVerified) {
