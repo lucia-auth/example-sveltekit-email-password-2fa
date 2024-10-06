@@ -7,7 +7,7 @@
 </script>
 
 <h1>Two-factor authentication</h1>
-<p>Enter the code in your authenticator app.</p>
+<p>Enter the code from your authenticator app.</p>
 <form method="post" use:enhance action="?/totp">
 	<label for="form-totp.code">Code</label>
 	<input id="form-totp.code" name="code" required /><br />
