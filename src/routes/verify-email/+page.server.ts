@@ -16,7 +16,7 @@ import type { Actions, RequestEvent } from "./$types";
 
 export async function load(event: RequestEvent) {
 	if (event.locals.user === null) {
-		return redirect(302, "/redirect");
+		return redirect(302, "/login");
 	}
 	let verificationRequest = getUserEmailVerificationRequestFromRequest(event);
 	if (verificationRequest === null || Date.now() >= verificationRequest.expiresAt.getTime()) {
