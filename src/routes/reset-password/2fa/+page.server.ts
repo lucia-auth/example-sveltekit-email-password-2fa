@@ -47,7 +47,7 @@ async function totpAction(event: RequestEvent) {
 			}
 		});
 	}
-	if (!user.registered2FA || session.twoFactorVerified || !session.emailVerified) {
+	if (!session.emailVerified || !user.registered2FA || session.twoFactorVerified) {
 		return fail(403, {
 			totp: {
 				message: "Forbidden"
@@ -99,7 +99,7 @@ async function totpAction(event: RequestEvent) {
 }
 
 async function recoveryCodeAction(event: RequestEvent) {
-	const { session } = validatePasswordResetSessionRequest(event);
+	const { session, user } = validatePasswordResetSessionRequest(event);
 	if (session === null) {
 		return fail(401, {
 			recoveryCode: {
@@ -107,20 +107,14 @@ async function recoveryCodeAction(event: RequestEvent) {
 			}
 		});
 	}
-	if (!session.emailVerified) {
+	if (!session.emailVerified || !user.registered2FA || session.twoFactorVerified) {
 		return fail(403, {
-			recoveryCode: {
+			totp: {
 				message: "Forbidden"
 			}
 		});
 	}
-	if (session.twoFactorVerified) {
-		return fail(403, {
-			recoveryCode: {
-				message: "Forbidden"
-			}
-		});
-	}
+
 	if (!recoveryCodeBucket.check(session.userId, 1)) {
 		return fail(429, {
 			recoveryCode: {
