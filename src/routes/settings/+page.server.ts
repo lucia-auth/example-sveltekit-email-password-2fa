@@ -14,9 +14,12 @@ import {
 	invalidateUserSessions,
 	setSessionTokenCookie
 } from "$lib/server/session";
+import { ExpiringTokenBucket } from "$lib/server/rate-limit";
 
 import type { Actions, RequestEvent } from "./$types";
 import type { SessionFlags } from "$lib/server/session";
+
+const passwordUpdateBucket = new ExpiringTokenBucket<string>(5, 60 * 30);
 
 export async function load(event: RequestEvent) {
 	if (event.locals.session === null || event.locals.user === null) {
@@ -62,6 +65,14 @@ async function updatePasswordAction(event: RequestEvent) {
 			}
 		});
 	}
+	if (!passwordUpdateBucket.check(event.locals.session.id, 1)) {
+		return fail(429, {
+			password: {
+				message: "Too many requests"
+			}
+		});
+	}
+
 	const formData = await event.request.formData();
 	const password = formData.get("password");
 	const newPassword = formData.get("new_password");
@@ -80,6 +91,15 @@ async function updatePasswordAction(event: RequestEvent) {
 			}
 		});
 	}
+
+	if (!passwordUpdateBucket.consume(event.locals.session.id, 1)) {
+		return fail(429, {
+			password: {
+				message: "Too many requests"
+			}
+		});
+	}
+
 	const passwordHash = getUserPasswordHash(event.locals.user.id);
 	const validPassword = await verifyPasswordHash(passwordHash, password);
 	if (!validPassword) {
