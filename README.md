@@ -34,6 +34,7 @@ ENCRYPTION_KEY="L9pmqRJnO1ZJSQ2svbHuBA=="
 Run the application:
 
 ```
+pnpm i
 pnpm dev
 ```
 
