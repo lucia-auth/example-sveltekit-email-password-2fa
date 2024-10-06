@@ -40,17 +40,17 @@ async function totpAction(event: RequestEvent) {
 			}
 		});
 	}
-	if (!totpBucket.check(session.userId, 1)) {
-		return fail(429, {
-			totp: {
-				message: "Too many requests"
-			}
-		});
-	}
 	if (!session.emailVerified || !user.registered2FA || session.twoFactorVerified) {
 		return fail(403, {
 			totp: {
 				message: "Forbidden"
+			}
+		});
+	}
+	if (!totpBucket.check(session.userId, 1)) {
+		return fail(429, {
+			totp: {
+				message: "Too many requests"
 			}
 		});
 	}
