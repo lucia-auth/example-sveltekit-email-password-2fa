@@ -115,6 +115,7 @@ export class ExpiringTokenBucket<_Key> {
 			return true;
 		}
 		if (now - bucket.createdAt >= this.expiresInSeconds * 1000) {
+			bucket.createdAt = now;
 			bucket.count = this.max;
 		}
 		if (bucket.count < cost) {
